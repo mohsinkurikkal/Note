@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.e4eazytech.notes.models.Note;
+import com.e4eazytech.notes.persistence.NoteRepository;
 
 public class NoteActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener, View.OnClickListener {
@@ -36,6 +37,9 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private Note mInitialNote;
     private GestureDetector mGestorDetector;
     private int mMode;
+    private NoteRepository mNoteRepository;
+    private Note mFinalNote;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         mCheck = findViewById(R.id.toolbar_check);
         mBackArrow = findViewById(R.id.toolbar_back_arrow);
 
+        mNoteRepository = new NoteRepository(this);
 
         if(getIncomingIntent()){
             setNewNoteProperties();
@@ -109,6 +114,20 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         mMode = EDIT_MODE_DISABLED;
         disableContentInteraction();
 
+        String temp = mLinedEditText.getText().toString();
+        temp = temp.replace("\n","");
+        temp = temp.replace(" ","");
+        if(temp.length() > 0){
+            mFinalNote.setTitle(mEditTitle.getText().toString());
+            mFinalNote.setContent(mLinedEditText.getText().toString());
+            String timestamp = "Jan 2019";
+            mFinalNote.setTimestamp(timestamp);
+
+            if(!mFinalNote.getContent().equals(mInitialNote.getContent())
+            || !mFinalNote.getTitle().equals(mInitialNote.getTitle())){
+                saveChanges();
+            }
+        }
     }
 
     private void setListeners(){
@@ -122,6 +141,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean getIncomingIntent(){
         if(getIntent().hasExtra("selected_note")){
             mInitialNote = getIntent().getParcelableExtra("selected_note");
+            mFinalNote = getIntent().getParcelableExtra("selected_note");
             Log.d(TAG, "getIncomingIntent: "+mInitialNote
                     .toString());
             mMode = EDIT_MODE_DISABLED;
@@ -133,6 +153,21 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         return true;
     }
 
+    private void saveChanges(){
+        if(mIsNewNote){
+            saveNewNote();
+
+        }else{
+
+        }
+
+    }
+
+    private void saveNewNote(){
+        mNoteRepository.insertNoteTask(mFinalNote);
+
+    }
+
     private void setNoteProperties(){
         mViewTitle.setText(mInitialNote.getTitle());
         mEditTitle.setText(mInitialNote.getTitle());
@@ -142,6 +177,12 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
     private void setNewNoteProperties(){
         mViewTitle.setText("Note Title");
         mEditTitle.setText("Note Title");
+
+        mInitialNote = new Note();
+        mFinalNote = new Note();
+        mInitialNote.setTitle("Note Title");
+        mFinalNote.setTitle("Note Title");
+
     }
 
     @Override
@@ -202,6 +243,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
             case R.id.toolbar_check:{
                 disableEditMode();
                 hideSoftKeyboard();
+
                 break;
             }
             case R.id.note_text_title:{
