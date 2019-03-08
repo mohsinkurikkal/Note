@@ -3,7 +3,9 @@ package com.e4eazytech.notes.persistence;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
+import com.e4eazytech.notes.async.DeleteAsyncTask;
 import com.e4eazytech.notes.async.InsertAsyncTask;
+import com.e4eazytech.notes.async.UpdateAsyncTask;
 import com.e4eazytech.notes.models.Note;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class NoteRepository {
     }
 
     public void updateNote(Note note){
+        new UpdateAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 
@@ -30,6 +33,6 @@ public class NoteRepository {
     }
 
     public void deleteNote(Note note){
-
+        new DeleteAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
     }
 }
