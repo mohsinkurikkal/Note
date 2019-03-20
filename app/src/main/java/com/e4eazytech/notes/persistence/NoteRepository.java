@@ -18,21 +18,21 @@ public class NoteRepository {
         mNoteDatabase = NoteDatabase.getInstance(context);
     }
 
-    public void insertNoteTask(Note note){
+    public void insertNoteTask(Note note) {
         new InsertAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 
-    public void updateNote(Note note){
+    public void updateNote(Note note) {
         new UpdateAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
 
     }
 
-    public LiveData<List<Note>> retrieveNotesTask(){
+    public LiveData<List<Note>> retrieveNotesTask() {
         return mNoteDatabase.getNoteDao().getNotes();
     }
 
-    public void deleteNote(Note note){
+    public void deleteNote(Note note) {
         new DeleteAsyncTask(mNoteDatabase.getNoteDao()).execute(note);
     }
 }

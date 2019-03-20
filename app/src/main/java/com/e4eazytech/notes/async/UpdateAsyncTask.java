@@ -7,6 +7,7 @@ import com.e4eazytech.notes.persistence.NoteDao;
 
 public class UpdateAsyncTask extends AsyncTask<Note, Void, Void> {
     private NoteDao mNoteDao;
+
     public UpdateAsyncTask(NoteDao dao) {
         mNoteDao = dao;
     }

@@ -13,8 +13,8 @@ public abstract class NoteDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "notes_db";
     private static NoteDatabase instance;
 
-    static NoteDatabase getInstance(final Context context){
-        if(instance == null){
+    static NoteDatabase getInstance(final Context context) {
+        if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     NoteDatabase.class,
                     DATABASE_NAME).build();
@@ -23,7 +23,6 @@ public abstract class NoteDatabase extends RoomDatabase {
     }
 
     public abstract NoteDao getNoteDao();
-
 
 
 }

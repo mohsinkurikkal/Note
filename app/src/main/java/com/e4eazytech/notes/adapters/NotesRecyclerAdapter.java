@@ -16,13 +16,12 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder>{
+public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Note> mNotes = new ArrayList<>();
     private OnNoteListener mOnNoteListener;
 
-    public NotesRecyclerAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener)
-    {
+    public NotesRecyclerAdapter(ArrayList<Note> notes, OnNoteListener onNoteListener) {
         this.mNotes = notes;
         this.mOnNoteListener = onNoteListener;
     }
@@ -31,21 +30,21 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_note_list_item,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_note_list_item, viewGroup, false);
         return new ViewHolder(view, mOnNoteListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        try{
-            String month = mNotes.get(i).getTimestamp().substring(0,2);
+        try {
+            String month = mNotes.get(i).getTimestamp().substring(0, 2);
             month = Utility.getMonthFromNumber(month);
-            String year  = mNotes.get(i).getTimestamp().substring(3);
+            String year = mNotes.get(i).getTimestamp().substring(3);
             String timestamp = month + " " + year;
             viewHolder.timestamp.setText(timestamp);
             viewHolder.title.setText(mNotes.get(i).getTitle());
-        }catch (Exception e){
-            Log.e(TAG, "onBindViewHolder: "+ e.getMessage() );
+        } catch (Exception e) {
+            Log.e(TAG, "onBindViewHolder: " + e.getMessage());
         }
     }
 
@@ -61,20 +60,19 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
 
         public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-            title=itemView.findViewById(R.id.note_title);
-            timestamp=itemView.findViewById(R.id.note_timestamp);
+            title = itemView.findViewById(R.id.note_title);
+            timestamp = itemView.findViewById(R.id.note_timestamp);
             this.onNoteListener = onNoteListener;
             itemView.setOnClickListener(this);
         }
 
-        public void onClick(View view){
+        public void onClick(View view) {
             onNoteListener.onNoteClick(getAdapterPosition());
 
         }
     }
 
-
-    public interface OnNoteListener{
+    public interface OnNoteListener {
         void onNoteClick(int position);
     }
 }

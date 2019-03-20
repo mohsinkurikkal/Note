@@ -55,8 +55,10 @@ public class NoteActivity extends AppCompatActivity implements View.OnTouchListe
         mBackArrowContainer = findViewById(R.id.back_arrow_container);
         mCheck = findViewById(R.id.toolbar_check);
         mBackArrow = findViewById(R.id.toolbar_back_arrow);
-
         mNoteRepository = new NoteRepository(this);
+
+        AdMobProvider.getInstance().displayBannerAds(this);
+
 
         if(getIncomingIntent()){
             setNewNoteProperties();

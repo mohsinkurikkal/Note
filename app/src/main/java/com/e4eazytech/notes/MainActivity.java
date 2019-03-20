@@ -37,13 +37,14 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AdMobProvider.getInstance().initializeMobileAds(this);
+        AdMobProvider.getInstance().displayBannerAds(this);
+
         mRecyclerView = findViewById(R.id.recyclerView);
         findViewById(R.id.fab).setOnClickListener(this);
-
         mNoteRepository = new NoteRepository(this);
         initRecyclerView();
         retrieveNotes();
-      //  insertFakeNotes();
         setSupportActionBar((Toolbar)findViewById(R.id.notes_toolbar));
         setTitle("Notes");
 
@@ -64,19 +65,6 @@ public class MainActivity extends AppCompatActivity implements NotesRecyclerAdap
 
             }
         });
-    }
-
-    private void insertFakeNotes(){
-
-        for (int i = 0; i<1000;i++ ) {
-            Note note = new Note();
-            note.setTitle("title = "+ i);
-            note.setContent("content ="+ i);
-            note.setTimestamp("Feb 2019");
-            mNotes.add(note);
-        }
-        mNotesRecyclerAdapter.notifyDataSetChanged();
-
     }
 
     private void initRecyclerView(){

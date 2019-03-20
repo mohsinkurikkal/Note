@@ -14,7 +14,6 @@ public class LinedEditText extends AppCompatEditText {
     private Paint mPaint;
 
 
-
     public LinedEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -28,7 +27,7 @@ public class LinedEditText extends AppCompatEditText {
     @Override
     protected void onDraw(Canvas canvas) {
 
-        int height  =  ((View)this.getParent()).getHeight();
+        int height = ((View) this.getParent()).getHeight();
         int lineHeight = getLineHeight();
         int numberOfLines = height / lineHeight;
 
@@ -37,13 +36,10 @@ public class LinedEditText extends AppCompatEditText {
 
         int baseline = getLineBounds(0, r);
 
-        for(int i = 0; i < numberOfLines; i++){
-            canvas.drawLine(r.left,baseline + 1, r.right, baseline + 1, paint);
+        for (int i = 0; i < numberOfLines; i++) {
+            canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, paint);
             baseline += lineHeight;
         }
-
-
-
         super.onDraw(canvas);
     }
 }

@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".NoteActivity"
-    android:background="@color/lightYellow"
-    >
+    android:background="@color/lightYellow">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,14 +23,17 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
     <com.e4eazytech.notes.LinedEditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/note_text"
-        android:textSize="23sp"
-        android:textColor="@color/black"
-        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="623dp"
         android:gravity="top"
-        android:imeOptions="flagNoExtractUi"/>
+        android:imeOptions="flagNoExtractUi"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="23sp" />
+
+    <include layout="@layout/mob_adview" />
 
 </LinearLayout>
